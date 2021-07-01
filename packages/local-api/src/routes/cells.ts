@@ -79,8 +79,8 @@ n\
             id: 'jsb4k',
           },
         ];
-        await fs.writeFile(fullPath, `[]`, 'utf-8');
-        res.send(defaultCells);
+        await fs.writeFile(fullPath, JSON.stringify(defaultCells), 'utf-8');
+        res.send([]);
       } else {
         throw err;
       }
