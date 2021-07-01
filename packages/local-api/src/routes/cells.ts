@@ -81,7 +81,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
         ];
         await fs.writeFile(
           fullPath,
-          JSON.stringify(defaultCells, [], `\n`),
+          JSON.stringify(defaultCells, [], ` `),
           'utf-8'
         );
         res.send(defaultCells);
