@@ -26,7 +26,7 @@ export const createCellsRouter = (filename: string, dir: string) => {
         let defaultCells = [
           {
             content:
-              '# JSX Editor\
+              '# JSX Editor \
               This is an interactive coding environment in which you can write Javascript, see it executed, and write comprehensive documentation and markdown.\
               - Click any text cell (including this one) to edit it\
               - The code in each code editor is all joined together in one file. If you define a variable in code cell #1 you can refer to it in any following cell\
@@ -41,18 +41,18 @@ export const createCellsRouter = (filename: string, dir: string) => {
             content:
               "import { useState } from 'react';\
 \
-              const Counter = () => {\
-                const [count, setCount] = useState(0)\
-                return (\
-                  <div>\
-                    <button onClick={() => setCount(count + 1)}>Click</button>\
-                    <h3>Count: {count}</h3>\
-                  </div>\
-                )\
-              };\
-\
-              // Display any variable or React Component by calling `show`\
-              show(<Counter />)\
+            const Counter = () => {\
+              const [count, setCount] = useState(0)\
+              return (\
+                <div>\
+                  <button onClick={() => setCount(count + 1)}>Click</button>\
+                  <h3>Count: {count}</h3>\
+                </div>\
+              )\
+            };\
+            \
+            // Display any variable or React Component by calling `show`\
+            show(<Counter />)\
             ",
             type: 'code',
             id: 'kkgj1',
@@ -60,30 +60,25 @@ export const createCellsRouter = (filename: string, dir: string) => {
           {
             content:
               'const App = () => {\
-                return (\
-                  <div>\
-                    <h2>Hi from the JSX Editor</h2>\
-                    <i>Counter component will be rendered below</i>\
-                    <hr/>\
-                    {\
-                      /* Counter was declared in a previous cell and can be referenced here */\
-                    }\
-                    <Counter />\
-                  </div>\
-                )\
-              }\
-              \
-              show(<App />)\
-            ',
+              return (\
+                <div>\
+                  <h2>Hi from the JSX Editor</h2>\
+                  <i>Counter component will be rendered below</i>\
+                  <hr/>\
+                  {\
+                    /* Counter was declared in a previous cell and can be referenced here */\
+                  }\
+                  <Counter />\
+                </div>\
+              )\
+            }\
+            \
+            show(<App />)',
             type: 'code',
             id: 'jsb4k',
           },
         ];
-        await fs.writeFile(
-          fullPath,
-          JSON.stringify(defaultCells, [], ` `),
-          'utf-8'
-        );
+        await fs.writeFile(fullPath, JSON.stringify(defaultCells), 'utf-8');
         res.send(defaultCells);
       } else {
         throw err;
