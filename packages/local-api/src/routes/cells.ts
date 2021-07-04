@@ -23,24 +23,62 @@ export const createCellsRouter = (filename: string, dir: string) => {
       // if an error is thrown, see if it says file doesn't exist
       if (err.code === 'ENOENT') {
         // create a file and add default cells
-        await fs.writeFile(
-          fullPath,
-          '[{"content": "# JSX Editor \nThis is an interactive coding environment in which you can write Javascript, see it executed, and write comprehensive documentation and markdown. \n- Click any text cell (including this one) to edit it \n- The code in each code editor is all joined together in one file. If you define a variable in code cell #1 you can refer to it in any following cell \n- *You can show any React component, string, number, or anything else by calling the `show` function. This is a function that is built into the environment. Call show multiple times to show multiple values* \n- Re-order or delete cells using the buttons on the top right corner \n- Add new cells by hovering on the divider between each cell \n All of your changes are saved to a file you opened your JSX Editor with. If you run `npx jsx-editor serve test.js`, all of the text and code cells will be saved to the `test.js` file.","type": "text","id": "j1b5k"},{"content": "","type": "code","id": "kkgj1"}]',
-          'utf-8'
-        );
-        res.send([
+        let defaultCells = [
           {
             content:
-              '# JSX Editor \nThis is an interactive coding environment in which you can write Javascript, see it executed, and write comprehensive documentation and markdown. \n- Click any text cell (including this one) to edit it \n- The code in each code editor is all joined together in one file. If you define a variable in code cell #1 you can refer to it in any following cell \n- *You can show any React component, string, number, or anything else by calling the `show` function. This is a function that is built into the environment. Call show multiple times to show multiple values* \n- Re-order or delete cells using the buttons on the top right corner \n- Add new cells by hovering on the divider between each cell \nAll of your changes are saved to a file you opened your JSX Editor with. If you run `npx jsx-editor serve test.js`, all of the text and code cells will be saved to the `test.js` file.',
+              '# JSX Editor \
+              This is an interactive coding environment in which you can write Javascript, see it executed, and write comprehensive documentation and markdown. \
+              - Click any text cell (including this one) to edit it \
+              - The code in each code editor is all joined together in one file. If you define a variable in code cell #1 you can refer to it in any following cell \
+              - *You can show any React component, string, number, or anything else by calling the `show` function. This is a function that is built into the environment. Call show multiple times to show multiple values* \
+              - Re-order or delete cells using the buttons on the top right corner \
+              - Add new cells by hovering on the divider between each cell \
+              All of your changes are saved to a file you opened your JSX Editor with. If you run `npx jsx-editor serve test.js`, all of the text and code cells will be saved to the `test.js` file.',
             type: 'text',
             id: 'j1b5k',
           },
           {
-            content: '',
+            content:
+              "import { useState } from 'react' \
+\
+            const Counter = () => { \
+              const [count, setCount] = useState(0) \
+              return ( \
+                <div> \
+                  <button onClick={() => setCount(count + 1)}>Click</button> \
+                  <h3>Count: {count}</h3> \
+                </div> \
+              ) \
+            }; \
+            \
+            show(<Counter />) \
+            ",
             type: 'code',
             id: 'kkgj1',
           },
-        ]);
+          {
+            content:
+              'const App = () => { \
+              return ( \
+                <div> \
+                  <h2>Hi from the JSX Editor</h2> \
+                  <i>Counter component will be rendered below</i> \
+                  <hr/> \
+                  { \
+                    /* Counter was declared in a previous cell and can be referenced here */ \
+                  } \
+                  <Counter /> \
+                </div>\
+              )\
+            }\
+            \
+            show(<App />)',
+            type: 'code',
+            id: 'jsb4k',
+          },
+        ];
+        await fs.writeFile(fullPath, JSON.stringify(defaultCells), 'utf-8');
+        res.send(defaultCells);
       } else {
         throw err;
       }
